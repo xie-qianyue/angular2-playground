@@ -2,7 +2,7 @@ import {Component} from 'angular2/core';
 import {OnInit} from 'angular2/core';
 import {Hero} from './../model/hero';
 import {HeroService} from './../service/hero.service'
-import {HeroDetailComponent} from './../heroDetail/hero-detail.component'
+import {Router} from 'angular2/router';
 
 // The (*) prefix to ngFor indicates that the <li> element and its children constitute a master template.
 // The # prefix before "hero" identifies the hero as a local template variable. 
@@ -11,14 +11,12 @@ import {HeroDetailComponent} from './../heroDetail/hero-detail.component'
 @Component({
     selector: 'my-app',
     template: `            
-            <h1>{{title}}</h1>
             <h2>My Heroes</h2>
             <ul class='heroes'>
                 <li *ngFor='#hero of heroes' (click)="onSelect(hero)" [class.selected]="hero === selectedHero">
                     <span class="badge">{{hero.id}}</span> {{hero.name}}
                 </li>
             </ul>
-            <my-hero-detail [hero]="selectedHero"></my-hero-detail>
               `,
     styles:[`
     .heroes {list-style-type: none; margin-left: 1em; padding: 0; width: 10em;}
@@ -36,23 +34,23 @@ import {HeroDetailComponent} from './../heroDetail/hero-detail.component'
     }
     .selected { background-color: #EEE; color: #369; }
     `],
-    directives: [HeroDetailComponent],
     providers: [HeroService]
 })
 
 export class HeroListComponent implements OnInit { 
     
-    constructor(private _heroService: HeroService) { }
+    constructor(private _router: Router, private _heroService: HeroService) { }
     
     ngOnInit(){
         this.getHeroes();
     }
-    
-    public title = 'Tour of Heros';
+
     public heroes: Hero[];
     public selectedHero: Hero;
     
-    onSelect(hero: Hero) { this.selectedHero = hero; }
+    onSelect(hero: Hero) { 
+        this._router.navigate( ['HeroDetail', { id: hero.id }] );    
+    }
     
     getHeroes() {
         this._heroService.getHeroes().then(

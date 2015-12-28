@@ -1,19 +1,36 @@
-import {Component} from 'angular2/core';
-import {Hero} from './model/hero';
+import {Component,  OnInit} from 'angular2/core';
+import {RouteParams, Router} from 'angular2/router';
+import {Hero} from './../model/hero';
+import {HeroService} from './../service/hero.service'
 
 @Component({
   selector: 'my-hero-detail',
   template: `
             <div *ngIf="hero">
-                Hello {{hero.name}}!
+                <h2>Hello {{hero.name}}!</h2>
                 <div><input [(ngModel)]='hero.name' placeholder='name'></div>
                 <div><label>id: </label>{{hero.id}}</div>
-            </div> 
+            </div>
+            <button (click)="gotoHeroes()">Back</button> 
             `,
   inputs: ['hero']
 })
 
-export class HeroDetailComponent {
-  // hero is passed by app.component with [hero]="selectedHero"
+export class HeroDetailComponent implements OnInit {
+  
+  constructor(
+    private _router:Router,
+    private _routeParams:RouteParams,
+    private _service:HeroService){ }
+    
+  ngOnInit() {
+    let id = this._routeParams.get('id');
+    this._service.getHero(id).then(hero => this.hero = hero);
+  }
+  
+  gotoHeroes() {
+    this._router.navigate(['Heroes']);
+  }
+  
   public hero: Hero;
 }

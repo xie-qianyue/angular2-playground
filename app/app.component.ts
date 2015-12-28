@@ -3,6 +3,7 @@
 import {Component} from 'angular2/core';
 import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
 import {HeroListComponent}     from './heroList/hero-list.component';
+import {HeroDetailComponent} from './heroDetail/hero-detail.component'
 
 // We define a component's metadata with the Angular Component function.
 @Component({
@@ -15,7 +16,8 @@ import {HeroListComponent}     from './heroList/hero-list.component';
 })
 
 @RouteConfig([
-  {path:'/heroes',        name: 'Heroes',       component: HeroListComponent}
+  {path:'/heroes',        name: 'Heroes',       component: HeroListComponent},
+  {path:'/hero/:id',      name: 'HeroDetail',   component: HeroDetailComponent}
 ])
 
 // The name of the file (without extension) is usually the name of the module. 
