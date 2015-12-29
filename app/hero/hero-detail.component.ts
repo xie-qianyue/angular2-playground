@@ -29,7 +29,7 @@ export class HeroDetailComponent implements OnInit {
   }
   
   gotoHeroes() {
-    this._router.navigate(['Hero']);
+    this._router.navigate(['HeroList']);
   }
   
   public hero: Hero;

@@ -1,6 +1,6 @@
 import {Component} from 'angular2/core';
 import {RouteConfig, RouterOutlet} from 'angular2/router';
-import {HeroListComponent}     from './hero-list.component';
+import {HeroListComponent} from './hero-list.component';
 import {HeroDetailComponent} from './hero-detail.component';
 import {HeroService} from './hero.service';
 
@@ -14,9 +14,8 @@ import {HeroService} from './hero.service';
 })
 
 @RouteConfig([
-  {path:'/',         name: 'Hero', component: HeroListComponent, useAsDefault: true},
-  {path:'/:id',      name: 'HeroDetail', component: HeroDetailComponent},
-  {path:'/list/:id', name: 'HeroList',   component: HeroListComponent}
+  {path:'/',         name: 'HeroList', component: HeroListComponent, useAsDefault: true},
+  {path:'/:id',      name: 'HeroDetail', component: HeroDetailComponent}
 ])
 
 export class HeroComponent { }
