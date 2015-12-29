@@ -1,4 +1,4 @@
-import {Hero} from './model/hero';
+import {Hero} from './hero';
 
 // The tutorial uses var, but I think that let is better here
 export let HEROES: Hero[] = [

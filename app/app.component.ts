@@ -2,22 +2,22 @@
 // Each library is itself a module made up of several, related feature modules.
 import {Component} from 'angular2/core';
 import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
-import {HeroListComponent}     from './heroList/hero-list.component';
-import {HeroDetailComponent} from './heroDetail/hero-detail.component'
+import {HeroComponent}     from './hero/hero.component';
+
 
 // We define a component's metadata with the Angular Component function.
 @Component({
-    selector: 'my-app',
+    selector: 'ng2-plg',
     template: `
-        <a [routerLink]="['Heroes']">Heroes</a>
+        <h1>Angular 2 Playground</h1>
+        <a [routerLink]="['Hero']">Hero</a>
         <router-outlet></router-outlet>
     `,
     directives: [ROUTER_DIRECTIVES]
 })
 
 @RouteConfig([
-  {path:'/heroes',        name: 'Heroes',       component: HeroListComponent},
-  {path:'/hero/:id',      name: 'HeroDetail',   component: HeroDetailComponent}
+  {path:'/hero/...',        name: 'Hero',       component: HeroComponent, useAsDefault: true},
 ])
 
 // The name of the file (without extension) is usually the name of the module. 

@@ -1,17 +1,15 @@
-import {Component} from 'angular2/core';
-import {OnInit} from 'angular2/core';
-import {Hero} from './../model/hero';
-import {HeroService} from './../service/hero.service'
+import {Component, OnInit} from 'angular2/core';
 import {Router} from 'angular2/router';
+import {HeroService} from './hero.service';
+import {Hero} from './hero';
 
 // The (*) prefix to ngFor indicates that the <li> element and its children constitute a master template.
 // The # prefix before "hero" identifies the hero as a local template variable. 
 // Our styles will only apply to our AppComponent and won't "leak" to the outer HTML.
 // ngIf : to keep the hero detail out of the DOM until there is a selected hero.
 @Component({
-    selector: 'my-app',
     template: `            
-            <h2>My Heroes</h2>
+            <h3>Hero list</h3>
             <ul class='heroes'>
                 <li *ngFor='#hero of heroes' (click)="onSelect(hero)" [class.selected]="hero === selectedHero">
                     <span class="badge">{{hero.id}}</span> {{hero.name}}
@@ -33,8 +31,7 @@ import {Router} from 'angular2/router';
         top: -1px;
     }
     .selected { background-color: #EEE; color: #369; }
-    `],
-    providers: [HeroService]
+    `]
 })
 
 export class HeroListComponent implements OnInit { 

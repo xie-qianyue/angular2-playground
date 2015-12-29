@@ -1,7 +1,7 @@
 import {Component,  OnInit} from 'angular2/core';
 import {RouteParams, Router} from 'angular2/router';
-import {Hero} from './../model/hero';
-import {HeroService} from './../service/hero.service'
+import {HeroService} from './hero.service';
+import {Hero} from './hero';
 
 @Component({
   selector: 'my-hero-detail',
@@ -29,7 +29,7 @@ export class HeroDetailComponent implements OnInit {
   }
   
   gotoHeroes() {
-    this._router.navigate(['Heroes']);
+    this._router.navigate(['Hero']);
   }
   
   public hero: Hero;
