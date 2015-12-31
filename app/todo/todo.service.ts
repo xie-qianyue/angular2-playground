@@ -12,8 +12,12 @@ export class TodoService {
 		return Promise.resolve(todos);
 	}
 	
-	addTodo(newTodo : Todo) {
+	addTodo(newTodo: Todo) {
 		todos.push(newTodo);
 		return Promise.resolve(todos);
+	}
+	
+	saveTodo(originTodo: Todo, newTodo: Todo) {
+		todos[todos.indexOf(originTodo)] = newTodo;
 	}
 }

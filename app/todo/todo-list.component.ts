@@ -9,7 +9,7 @@ import {TodoService} from './todo.service';
 		<button (click)="addTodo(newTodo.value)">Add</button>
 		<ul>
 			<li *ngFor='#todo of todos'>
-				<input type='checkbox' [(ngModel)]='todo.completed'>
+				<input type='checkbox' [(ngModel)]='todo.completed' (click)="toggleTodo(todo)">
 				{{todo.item}}
 			</li>
 		</ul>
@@ -26,11 +26,17 @@ export class TodoListComponent implements OnInit {
 	
 	public todos: Todo[];
 	
-	addTodo(newTodoItem:string) {
+	addTodo(newTodoItem: string) {
 		let newTodo = new Todo(newTodoItem);	
 		this._todoService.addTodo(newTodo).then(
 			todos => this.todos = todos
 		);		
+	}
+	
+	toggleTodo(todo: Todo) {
+		let newTodo = new Todo(todo.item);
+		newTodo.completed = !todo.completed;
+		this._todoService.saveTodo(todo, newTodo);		
 	}
 	
 	getTodos(){
