@@ -6,7 +6,7 @@ import {TodoService} from './todo.service';
 	selector: 'todo-list',
 	template: `
 		<input #newTodo placeholder='What needs to be done?' autofocus>
-		<button (click)="addTodo(newTodo.value)">Add</button>
+		<button (click)="addTodo(newTodo.value)" (keyup.enter)="addTodo(newTodo.value)">Add</button>
 		<ul>
 			<li *ngFor='#todo of todos'>
 				<input type='checkbox' [(ngModel)]='todo.completed' (click)="toggleTodo(todo)">
