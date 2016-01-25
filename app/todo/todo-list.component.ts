@@ -8,12 +8,15 @@ import {TodoService} from './todo.service';
 		<input #newTodo placeholder='What needs to be done?' autofocus>
 		<button (click)="addTodo(newTodo.value)" (keyup.enter)="addTodo(newTodo.value)">Add</button>
 		<ul>
-			<li *ngFor='#todo of todos'>
-				<input type='checkbox' [(ngModel)]='todo.completed' (click)="toggleTodo(todo)">
-				{{todo.item}}
+			<li *ngFor="#todo of todos">
+				<input type='checkbox' [(ngModel)]="todo.completed" (click)="toggleTodo(todo)">
+				<span [class.completed]="todo.completed">{{todo.item}}</span>
 			</li>
 		</ul>
-	`
+	`,
+	styles: [`
+		.completed { text-decoration: line-through; }
+	`]
 })
 
 export class TodoListComponent implements OnInit {
@@ -36,7 +39,8 @@ export class TodoListComponent implements OnInit {
 	toggleTodo(todo: Todo) {
 		let newTodo = new Todo(todo.item);
 		newTodo.completed = !todo.completed;
-		this._todoService.saveTodo(todo, newTodo);		
+		this._todoService.saveTodo(todo, newTodo);
+		console.log('completed: ' + newTodo.completed);	
 	}
 	
 	getTodos(){
