@@ -1,23 +1,29 @@
-import {Injectable} from 'angular2/core';
-import {Todo} from './todo';
-
-let todos: Todo[] = [
-	{item:'ES6', completed:false},
-	{item:'Angular 2', completed:false}
-];
+import { Injectable } from 'angular2/core';
+import { Todo } from './todo';
+import { Todos } from './mock-todo';
 
 @Injectable()
 export class TodoService {
 	getTodos() {
-		return Promise.resolve(todos);
+		return Promise.resolve(Todos);
 	}
 	
 	addTodo(newTodo: Todo) {
-		todos.push(newTodo);
-		return Promise.resolve(todos);
+		Todos.push(newTodo);
+		return Promise.resolve(Todos);
 	}
 	
 	saveTodo(originTodo: Todo, newTodo: Todo) {
-		todos[todos.indexOf(originTodo)] = newTodo;
+		Todos[Todos.indexOf(originTodo)] = newTodo;
+	}
+	
+	deleteTodo(idTodo: number) {
+		for(let todo of Todos) {
+			if(todo.id === idTodo) {
+				Todos.pop(todo);
+				break;
+			}
+		}
+		return Promise.resolve(Todos);
 	}
 }
