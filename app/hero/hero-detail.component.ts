@@ -3,6 +3,7 @@ import {RouteParams, Router} from 'angular2/router';
 import {HeroService} from './hero.service';
 import {Hero} from './hero';
 
+
 @Component({
   selector: 'my-hero-detail',
   template: `
@@ -21,7 +22,8 @@ export class HeroDetailComponent implements OnInit {
   constructor(
     private _router:Router,
     private _routeParams:RouteParams,
-    private _service:HeroService){ }
+    private _service:HeroService
+  ) { }
     
   ngOnInit() {
     let id = this._routeParams.get('id');
@@ -29,7 +31,7 @@ export class HeroDetailComponent implements OnInit {
   }
   
   gotoHeroes() {
-    this._router.navigate(['HeroList']);
+    this._router.navigate(['HeroList', { id: this.hero.id }]);
   }
   
   public hero: Hero;

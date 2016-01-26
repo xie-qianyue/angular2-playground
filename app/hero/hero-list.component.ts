@@ -1,5 +1,5 @@
 import {Component, OnInit} from 'angular2/core';
-import {Router} from 'angular2/router';
+import {Router, RouteParams} from 'angular2/router';
 import {HeroService} from './hero.service';
 import {Hero} from './hero';
 
@@ -11,7 +11,7 @@ import {Hero} from './hero';
     template: `            
             <h3>Hero list</h3>
             <ul class='heroes'>
-                <li *ngFor='#hero of heroes' (click)="onSelect(hero)" [class.selected]="hero === selectedHero">
+                <li *ngFor='#hero of heroes' (click)="onSelect(hero)" [class.selected]="isSelected(hero)">
                     <span class="badge">{{hero.id}}</span> {{hero.name}}
                 </li>
             </ul>
@@ -34,16 +34,22 @@ import {Hero} from './hero';
     `]
 })
 
-export class HeroListComponent implements OnInit { 
+export class HeroListComponent implements OnInit {
     
-    constructor(private _router: Router, private _heroService: HeroService) { }
+    public heroes: Hero[];
+    private _selectedId: number;
+
+    constructor(
+        private _router: Router,
+        private _heroService: HeroService
+        private _routeParams: RouteParams
+    ) {
+        this._seletedId = +_routeParams.get('id');
+    }
     
     ngOnInit(){
         this.getHeroes();
     }
-
-    public heroes: Hero[];
-    public selectedHero: Hero;
     
     onSelect(hero: Hero) { 
         this._router.navigate( ['HeroDetail', { id: hero.id }] );    
@@ -53,5 +59,9 @@ export class HeroListComponent implements OnInit {
         this._heroService.getHeroes().then(
             heroes => this.heroes = heroes
         );
+    }
+
+    isSelected(hero: Hero) {
+        return this._seletedId === hero.id;
     }
 }
