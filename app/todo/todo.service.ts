@@ -17,13 +17,8 @@ export class TodoService {
 		Todos[Todos.indexOf(originTodo)] = newTodo;
 	}
 	
-	deleteTodo(idTodo: number) {
-		for(let todo of Todos) {
-			if(todo.id === idTodo) {
-				Todos.pop(todo);
-				break;
-			}
-		}
+	deleteTodo(todo: Todo) {
+		Todos.splice(Todos.indexOf(todo), 1);
 		return Promise.resolve(Todos);
 	}
 }

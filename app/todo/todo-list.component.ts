@@ -11,7 +11,7 @@ import {TodoService} from './todo.service';
 			<li *ngFor="#todo of todos">
 				<input type='checkbox' [(ngModel)]="todo.completed" (click)="toggleTodo(todo)">
 				<span [class.completed]="todo.completed">{{todo.item}}</span>
-				<button (click)="deleteTodo(todo.id)">delete</button>
+				<button (click)="deleteTodo(todo)">delete</button>
 			</li>
 		</ul>
 	`,
@@ -49,8 +49,8 @@ export class TodoListComponent implements OnInit {
 		);
 	}
 	
-	deleteTodo(idTodo: number) {
-		this._todoService.deleteTodo(idTodo).then(
+	deleteTodo(todo: Todo) {
+		this._todoService.deleteTodo(todo).then(
 			todos => this.todos = todos
 		)
 	}
