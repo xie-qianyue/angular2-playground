@@ -5,12 +5,13 @@ import {TodoService} from './todo.service';
 @Component({
 	selector: 'todo-list',
 	template: `
-		<input #newTodo placeholder='What needs to be done?' autofocus>
-		<button (click)="addTodo(newTodo.value)" (keyup.enter)="addTodo(newTodo.value)">Add</button>
+		<input [(ngModel)]="newTodo" placeholder='What needs to be done?' (keyup.enter)="addTodo()" autofocus>
+		<button (click)="addTodo()">Add</button>
 		<ul>
 			<li *ngFor="#todo of todos">
 				<input type='checkbox' [(ngModel)]="todo.completed" (click)="toggleTodo(todo)">
-				<span [class.completed]="todo.completed">{{todo.item}}</span>
+				<span [class.completed]="todo.completed" [style.display]="isEditing(todo)?'none':'inline'" (dblclick)="onEditTodo(todo)">{{todo.item}}</span>
+				<input [(ngModel)]="todo.item" [style.display]="isEditing(todo)?'inline':'none'" (keyup.enter)="saveEditedTodo(todo)">
 				<button (click)="deleteTodo(todo)">delete</button>
 			</li>
 		</ul>
@@ -22,6 +23,11 @@ import {TodoService} from './todo.service';
 
 export class TodoListComponent implements OnInit {
 	
+	// For showing/hiding editing todo
+	private _todoOnEdit: Todo;
+	// For updating new todo
+	private _originTodo: Todo;
+	
 	constructor(private _todoService: TodoService) { }
 	
 	ngOnInit() {
@@ -29,17 +35,20 @@ export class TodoListComponent implements OnInit {
     }
 	
 	public todos: Todo[];
+	public newTodo: string;
 	
-	addTodo(newTodoItem: string) {
-		let newTodo = new Todo(newTodoItem);	
+	addTodo() {
+		let newTodo = new Todo(this.newTodo.trim());	
 		this._todoService.addTodo(newTodo).then(
-			todos => this.todos = todos
-		);		
+			todos => {
+				this.todos = todos
+				this.newTodo = '';
+			}			
+		);	
 	}
 	
 	toggleTodo(todo: Todo) {
-		let newTodo = new Todo(todo.item);
-		newTodo.completed = !todo.completed;
+		let newTodo = new Todo(todo.item, !todo.completed);
 		this._todoService.saveTodo(todo, newTodo);
 	}
 	
@@ -52,6 +61,26 @@ export class TodoListComponent implements OnInit {
 	deleteTodo(todo: Todo) {
 		this._todoService.deleteTodo(todo).then(
 			todos => this.todos = todos
-		)
+		);
+	}
+	
+	saveEditedTodo(newTodo: Todo) {
+		console.log('_originTodo : ' + this._originTodo.item);
+		this._todoService.saveTodo(this._originTodo, newTodo).then(
+			todos => {
+				this.todos = todos;
+				this._todoOnEdit = null;
+			}			
+		);
+	}
+	
+	onEditTodo(todo: Todo) {
+		this._todoOnEdit = todo;
+		// cannot pass todo by reference!
+		this._originTodo = new Todo(todo.item, todo.completed);
+	}
+	
+	isEditing(todo: Todo) {
+		return this._todoOnEdit === todo;
 	}
  }

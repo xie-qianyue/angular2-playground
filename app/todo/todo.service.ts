@@ -7,16 +7,17 @@ export class TodoService {
 	getTodos() {
 		return Promise.resolve(Todos);
 	}
-	
+
 	addTodo(newTodo: Todo) {
 		Todos.push(newTodo);
 		return Promise.resolve(Todos);
 	}
-	
+
 	saveTodo(originTodo: Todo, newTodo: Todo) {
 		Todos[Todos.indexOf(originTodo)] = newTodo;
+		return Promise.resolve(Todos);
 	}
-	
+
 	deleteTodo(todo: Todo) {
 		Todos.splice(Todos.indexOf(todo), 1);
 		return Promise.resolve(Todos);
