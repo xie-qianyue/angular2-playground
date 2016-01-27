@@ -1,11 +1,10 @@
 export class Todo {
-	id: number;
 	item: string;
 	completed: boolean;
 	
-	constructor(item: string) {
-		this.id = new Date().getTime();
+	// set parameter "completed" default value to false
+	constructor(item: string, completed = false) {
 		this.item = item;
-		this.completed = false;
+		this.completed = completed;
 	}
 }
