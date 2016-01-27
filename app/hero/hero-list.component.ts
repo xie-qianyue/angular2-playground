@@ -41,10 +41,10 @@ export class HeroListComponent implements OnInit {
 
     constructor(
         private _router: Router,
-        private _heroService: HeroService
+        private _heroService: HeroService,
         private _routeParams: RouteParams
     ) {
-        this._seletedId = +_routeParams.get('id');
+        this._selectedId = +_routeParams.get('id');
     }
     
     ngOnInit(){
@@ -62,6 +62,6 @@ export class HeroListComponent implements OnInit {
     }
 
     isSelected(hero: Hero) {
-        return this._seletedId === hero.id;
+        return this._selectedId === hero.id;
     }
 }
