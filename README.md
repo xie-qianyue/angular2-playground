@@ -12,3 +12,4 @@ Lauch App with `npm start`, a page with url `http://localhost:3000/` will be ope
 ## Todos
 * unit test
 * live demo
+* RxJS
