@@ -1,25 +1,36 @@
 import { Injectable } from 'angular2/core';
 import { Todo } from './todo';
-import { Todos } from './mock-todo';
+
+// let todoList = Todos;
+let todoList = [	
+	new Todo('ES6', false),
+	new Todo('Angular 2', false)
+];
+
+// return a new array
+function deepCopyArray(arr) {
+	return JSON.parse(JSON.stringify(arr));
+}
 
 @Injectable()
 export class TodoService {
 	getTodos() {
-		return Promise.resolve(Todos);
+		return Promise.resolve(deepCopyArray(todoList));
 	}
 
 	addTodo(newTodo: Todo) {
-		Todos.push(newTodo);
-		return Promise.resolve(Todos);
+		todoList.push(newTodo);
+		return Promise.resolve(deepCopyArray(todoList));
 	}
 
 	saveTodo(originTodo: Todo, newTodo: Todo) {
-		Todos[Todos.indexOf(originTodo)] = newTodo;
-		return Promise.resolve(Todos);
+		let index = todoList.map(todo => todo.item).indexOf(originTodo.item);
+		todoList[index] = newTodo;
+		return Promise.resolve(deepCopyArray(todoList));
 	}
 
 	deleteTodo(todo: Todo) {
-		Todos.splice(Todos.indexOf(todo), 1);
-		return Promise.resolve(Todos);
+		todoList.splice(todoList.indexOf(todo), 1);
+		return Promise.resolve(deepCopyArray(todoList));
 	}
 }
